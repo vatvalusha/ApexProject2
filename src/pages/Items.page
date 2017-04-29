@@ -1,0 +1,38 @@
+<apex:page standardController="Item__c" showHeader="false" recordSetVar="items" extensions="ControllerItemSingle">
+    <apex:include pageName="Header"/>
+    <html>
+    <apex:stylesheet value="{!$Resource.style}"/>
+    <body>
+    <div id="big">
+        <apex:form >
+            <div id="menu">
+                <apex:pageBlock title="Category">
+                    <apex:repeat value="{!categories}" var="category">
+                        <apex:pageBlockSection >
+                            <apex:outputLink value="/apex/indexPage">{!category.Name}
+                                <apex:param name="id" value="{!category.id}"/>
+                            </apex:outputLink>
+
+                        </apex:pageBlockSection>
+                    </apex:repeat>
+                </apex:pageBlock>
+            </div>
+            <div id="soloItem">
+                <apex:pageBlock >
+                    <div id="photo">
+                    <apex:outputField value=" {!item.Photo__c}"/>
+                    </div>
+                   <b> Model : </b> <apex:outputText value=" {!item.Name}"/><br/>
+                    <b> Description :</b> <br/>
+                    <apex:outputText value="{!item.Description__c}"/><br/>
+                    <b> Price : </b><apex:outputText value=" {!item.Price__c}"/><br/>
+                    <apex:inputText value="{!count}"/>
+                    <apex:commandButton value="Add" action="{!add}" reRender="soloitem"/>
+                </apex:pageBlock>
+            </div>
+        </apex:form>
+    </div>
+    </body>
+    </html>
+    <apex:include pageName="Footer"/>
+</apex:page>

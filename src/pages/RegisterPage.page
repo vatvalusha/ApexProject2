@@ -1,0 +1,55 @@
+<apex:page id="RegisterPage" standardController="ShopUser__c" recordSetVar="shopusers" showHeader="false"
+           extensions="ShopUserExtension,ControllerItem">
+
+    <apex:include pageName="Header"/>
+    <html>
+    <apex:stylesheet value="{!$Resource.style}"/>
+    <body>
+    <div id="big">
+    <apex:form >
+        <div id="menu">
+            <apex:pageblock title="Category">
+                <apex:repeat value="{!categories}" var="category">
+                    <apex:pageBlockSection >
+                        <apex:outputLink value="/apex/indexPage" styleClass="btn">{!category.Name}
+                            <apex:param name="id" value="{!category.id}"/>
+                        </apex:outputLink>
+                        <apex:outputText value="{!category.Items__r.size}"/>
+                    </apex:pageBlockSection>
+                </apex:repeat>
+            </apex:pageblock>
+        </div>
+    </apex:form>
+
+    <div id="col2">
+    <apex:form >
+        <apex:pageBlock rendered="{!IF(!logIn,true,false)}">
+
+                <apex:pageBlockSection >
+                <apex:inputField value="{!user.Login__c}" label="Login"></apex:inputField>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.Password__c}"></apex:inputField>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.UserName__c}"></apex:inputField>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.Phone__c}"></apex:inputField>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.Email__c}"></apex:inputField>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection >
+                <apex:commandButton value="Register" action="{!register}"/>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+    </apex:form>
+    </div>
+    </div>
+        </body>
+    </html>
+    <apex:include pageName="Footer"/>
+</apex:page>

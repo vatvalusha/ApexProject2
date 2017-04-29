@@ -1,0 +1,71 @@
+<apex:page standardController="Item__c" showHeader="false" recordSetVar="items" extensions="ControllerItem">
+    <apex:include pageName="Header"/>
+    <html>
+    <apex:stylesheet value="{!$Resource.style}"/>
+    <header>
+        <apex:includeScript value="{!$Resource.jjquery}"/>
+
+        <apex:includeScript value="{!$Resource.Paginate}"/>
+
+        <script type='text/javascript'>
+            $.noConflict();
+
+            jQuery(document).ready(function ($) {
+                $('.demo2').pajinate();
+            });
+        </script>
+    </header>
+    <body>
+    <div id="big">
+        <apex:form >
+            <div id="menu">
+                <apex:pageblock title="Category">
+                    <apex:repeat value="{!categories}" var="category">
+                        <apex:pageBlockSection >
+                            <apex:outputLink value="/apex/indexPage" styleClass="btn">{!category.Name}
+                                <apex:param name="id" value="{!category.id}"/>
+                            </apex:outputLink>
+                            <apex:outputText value="{!category.Items__r.size}"/>
+                        </apex:pageBlockSection>
+                    </apex:repeat>
+                </apex:pageblock>
+            </div>
+            <apex:outputpanel layout="block" styleclass="demo2">
+
+                <div id="col2">
+                    <apex:pageBlock >
+                        <apex:pageBlockSection id="contacts_list">
+                            <apex:outputpanel layout="block" styleclass="content">
+                                <apex:repeat value="{!wrapperItems}" var="ite">
+                                    <apex:outputpanel layout="block" styleclass="panel">
+                                        <apex:pageBlockSection >
+                                            <div id="item">
+                                                <apex:outputField label="" value="{!ite.id.Photo__c}"/>
+                                                <b>Model : </b>
+                                                <apex:outputLink value="/apex/Items">{!ite.id.Name}
+                                                    <apex:param name="idItem" value="{!ite.id.id}"/>
+                                                </apex:outputLink>
+                                                <b>Quantity : </b>
+                                                <apex:inputText value="{!ite.counter}">
+                                                </apex:inputText>
+                                                <apex:commandLink value="Add" action="{!add}" styleClass="btn"
+                                                                  reRender="col2">
+                                                    <apex:param name="item" value="{!ite.id.id}"/>
+                                                </apex:commandLink>
+                                            </div>
+                                        </apex:pageBlockSection>
+                                    </apex:outputpanel>
+                                </apex:repeat>
+                            </apex:outputpanel>
+
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <div class="page_navigation" style="text-align: center "></div>
+                </div>
+            </apex:outputpanel>
+        </apex:form>
+    </div>
+    </body>
+    </html>
+    <apex:include pageName="Footer"/>
+</apex:page>

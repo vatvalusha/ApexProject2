@@ -1,0 +1,38 @@
+<apex:page id="Header" standardController="Basket__c" recordSetVar="baskets" extensions="ShopUserExtension" showHeader="false" >
+
+    <apex:stylesheet value="{!$Resource.style}"/>
+
+
+    <div id="header">
+        <div id="logo">
+            <apex:image url="{!$Resource.logo}" width="157" height="72"/>
+
+        </div>
+    <apex:form >
+        <apex:commandButton value="Home" action="{!indexPage}" />
+        <apex:commandButton value="Basket" action="{!basketPage}" />
+         <apex:commandButton value="Registration" rendered="{!IF(!checkCookie,true,false)}"
+                             action="{!registerPage}" />
+
+        <apex:commandButton value="Log in" rendered="{!IF(!checkCookie,true,false)}"
+                            action="{!changeLogIn}"  />
+        <apex:commandButton value="Log out" rendered="{!IF(checkCookie,true,false)}"
+                            action="{!logOut}"/>
+
+       <apex:outputText style="font-weight: bold" value=" {!idUser}"/>
+        <div id="layer">
+        <apex:pageBlock rendered="{!IF(logIn,true, false)}">
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.Login__c}" label="Login"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!user.Password__c}" label="Password"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandButton value="Apply" action="{!checkUserInDB}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        </div>
+    </apex:form>
+    </div>
+</apex:page>

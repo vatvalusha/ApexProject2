@@ -1,0 +1,45 @@
+<apex:page id="BasketPages" standardController="Basket__c" showHeader="false" recordSetVar="baskets"
+           extensions="ControllerBasket,ShopUserExtension">
+    <apex:include pageName="Header"/>
+    <html>
+    <apex:stylesheet value="{!$Resource.style}"/>
+    <body>
+    <div id="bigBasket">
+        <apex:form >
+            <div id="r">
+                <apex:pageBlock title="Basket" id="bs">
+                    <div id="customer">
+                        <apex:outputText value="{!idUser}">Customer:</apex:outputText>
+                    </div>
+                    <div id="seller">
+                        <apex:outputText value="{!$User.Email}">Seller:</apex:outputText>
+                    </div>
+                    <apex:pageBlockTable value="{!wrapperItems}" var="item" columns="3">
+                        <apex:column >
+                            <apex:outputText value="{!item.counter}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:outputText value="{!item.id.Name__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:outputText value="{!item.id.Price__c*item.counter}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:outputText value="{!item.id.Category__r.Name}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <br/>
+                    <b>Total Price : </b>
+                    <apex:outputText value="{!tottalPrice}"></apex:outputText>
+                    <br/><br/>
+                    <apex:commandLink value="Buy" action="{!buy}" styleClass="btn" reRender="r"/>
+                    <apex:commandLink value="Cancel" action="{!cancelBuying}" styleClass="btn" />
+                    <apex:commandLink value="Main Page" action="{!backMain}" styleClass="btn"/>
+                </apex:pageBlock>
+            </div>
+        </apex:form>
+    </div>
+    </body>
+    </html>
+    <apex:include pageName="Footer"/>
+</apex:page>
